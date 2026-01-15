@@ -58,26 +58,27 @@ export default function Projects() {
           y: 0,
           scrollTrigger: {
             trigger: titleRef.current,
-            start: "top 80%",
+            start: "top 85%",
+            end: "top 50%",
+            scrub: 0.5,
           },
-          duration: 0.8,
-          ease: "power3.out",
         });
       }
 
       if (projectsRef.current) {
-        const projectCards = Array.from(projectsRef.current.children);
-        gsap.set(projectCards, { opacity: 0, y: 100 });
-        gsap.to(projectCards, {
-          opacity: 1,
-          y: 0,
-          stagger: 0.2,
-          scrollTrigger: {
-            trigger: projectsRef.current,
-            start: "top 80%",
-          },
-          duration: 0.8,
-          ease: "power3.out",
+        const projectCards = Array.from(projectsRef.current.children) as HTMLElement[];
+        projectCards.forEach((card, index) => {
+          gsap.set(card, { opacity: 0, y: 100 });
+          gsap.to(card, {
+            opacity: 1,
+            y: 0,
+            scrollTrigger: {
+              trigger: projectsRef.current,
+              start: `top ${85 - index * 8}%`,
+              end: `top ${50 - index * 8}%`,
+              scrub: 0.5,
+            },
+          });
         });
       }
     }, sectionRef);

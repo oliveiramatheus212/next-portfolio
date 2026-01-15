@@ -2,6 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
@@ -15,9 +20,9 @@ export default function Footer() {
         scrollTrigger: {
           trigger: footerRef.current,
           start: "top 80%",
+          end: "top 20%",
+          scrub: 1,
         },
-        duration: 0.8,
-        ease: "power2.out",
       });
     }
   }, []);

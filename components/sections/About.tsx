@@ -24,41 +24,43 @@ export default function About() {
           scrollTrigger: {
             trigger: titleRef.current,
             start: "top 80%",
+            end: "top 20%",
+            scrub: 1,
           },
-          duration: 0.8,
-          ease: "power3.out",
         });
       }
 
       if (contentRef.current) {
-        const children = Array.from(contentRef.current.children);
-        gsap.set(children, { opacity: 0, x: -50 });
-        gsap.to(children, {
-          opacity: 1,
-          x: 0,
-          stagger: 0.2,
-          scrollTrigger: {
-            trigger: contentRef.current,
-            start: "top 80%",
-          },
-          duration: 0.8,
-          ease: "power3.out",
+        const children = Array.from(contentRef.current.children) as HTMLElement[];
+        children.forEach((child, index) => {
+          gsap.set(child, { opacity: 0, x: -50 });
+          gsap.to(child, {
+            opacity: 1,
+            x: 0,
+            scrollTrigger: {
+              trigger: contentRef.current,
+              start: `top ${80 - index * 10}%`,
+              end: `top ${20 - index * 10}%`,
+              scrub: 1,
+            },
+          });
         });
       }
 
       if (skillsRef.current) {
-        const children = Array.from(skillsRef.current.children);
-        gsap.set(children, { opacity: 0, scale: 0.8 });
-        gsap.to(children, {
-          opacity: 1,
-          scale: 1,
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: skillsRef.current,
-            start: "top 80%",
-          },
-          duration: 0.6,
-          ease: "back.out(1.7)",
+        const children = Array.from(skillsRef.current.children) as HTMLElement[];
+        children.forEach((child, index) => {
+          gsap.set(child, { opacity: 0, scale: 0.8 });
+          gsap.to(child, {
+            opacity: 1,
+            scale: 1,
+            scrollTrigger: {
+              trigger: skillsRef.current,
+              start: `top ${80 - index * 5}%`,
+              end: `top ${20 - index * 5}%`,
+              scrub: 1,
+            },
+          });
         });
       }
     }, sectionRef);

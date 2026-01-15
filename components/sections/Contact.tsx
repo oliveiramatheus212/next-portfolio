@@ -11,6 +11,7 @@ if (typeof window !== "undefined") {
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -28,25 +29,43 @@ export default function Contact() {
           scrollTrigger: {
             trigger: titleRef.current,
             start: "top 80%",
+            end: "top 20%",
+            scrub: 1,
           },
-          duration: 0.8,
-          ease: "power3.out",
+        });
+      }
+
+      if (contentRef.current) {
+        const children = Array.from(contentRef.current.children) as HTMLElement[];
+        children.forEach((child, index) => {
+          gsap.set(child, { opacity: 0, x: 50 });
+          gsap.to(child, {
+            opacity: 1,
+            x: 0,
+            scrollTrigger: {
+              trigger: contentRef.current,
+              start: `top ${80 - index * 10}%`,
+              end: `top ${20 - index * 10}%`,
+              scrub: 1,
+            },
+          });
         });
       }
 
       if (formRef.current) {
-        const children = Array.from(formRef.current.children);
-        gsap.set(children, { opacity: 0, x: -50 });
-        gsap.to(children, {
-          opacity: 1,
-          x: 0,
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: formRef.current,
-            start: "top 80%",
-          },
-          duration: 0.6,
-          ease: "power3.out",
+        const children = Array.from(formRef.current.children) as HTMLElement[];
+        children.forEach((child, index) => {
+          gsap.set(child, { opacity: 0, x: -50 });
+          gsap.to(child, {
+            opacity: 1,
+            x: 0,
+            scrollTrigger: {
+              trigger: formRef.current,
+              start: `top ${80 - index * 5}%`,
+              end: `top ${20 - index * 5}%`,
+              scrub: 1,
+            },
+          });
         });
       }
     }, sectionRef);
@@ -88,7 +107,7 @@ export default function Contact() {
         </h2>
 
         <div className="grid md:grid-cols-2 gap-12">
-          <div>
+          <div ref={contentRef}>
             <h3 className="text-2xl font-semibold mb-6 text-gray-100">
               Vamos conversar?
             </h3>
